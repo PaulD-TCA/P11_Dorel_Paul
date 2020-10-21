@@ -1,0 +1,14 @@
+<section class="page-section bg-primary" id="about">
+  <br><br><br>
+    <div class="container">
+        <div class="row">
+            {% for favorite in favourites_list %}
+            <div class="col-xs-18 col-sm-6 col-md-4">
+              <img src="{{ favorite.p_image_url }}" height="200" class="img-fluid" alt="Responsive image">
+              <h4>{{ favorite.p_name }}</h4>
+              <h5>Nutriscore: {{ favorite.p_nutrition_grade_fr }}</h5>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

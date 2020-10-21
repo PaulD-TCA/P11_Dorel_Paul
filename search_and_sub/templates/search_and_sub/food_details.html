@@ -1,0 +1,63 @@
+<section>
+  <br><br><br><br><br><br>
+  <div class="jumbotron jumbotron-fluid change">
+    <div class="container">
+     {% for detail in food_details %}
+     <h1><mark>{{ detail.p_name }}</mark></h1>
+   {% endfor %}
+  </div>
+</div>
+
+<style>
+    .change {
+      {% for detail in food_details %}
+      background-image: url({{ detail.p_image_url }});
+      {% endfor %}
+      background-size: cover;
+      background-size: 200px;
+      color: white;
+
+      text-align: center;
+      min-height: 300px;
+
+</style>
+
+
+  <div class="container h-100">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 text-center">
+        {% for detail in food_details %}
+
+        {% if detail.p_nutrition_grade_fr == "a" %}
+        <img src="/static/assets/img/nutriscore-a.svg" height="100">
+        {% elif detail.p_nutrition_grade_fr == "b" %}
+        <img src="/static/assets/img/nutriscore-b.svg" height="100">
+        {% elif detail.p_nutrition_grade_fr == "c" %}
+        <img src="/static/assets/img/nutriscore-c.svg" height="100">
+        {% elif detail.p_nutrition_grade_fr == "d" %}
+        <img src="/static/assets/img/nutriscore-d.svg" height="100">
+        {% elif detail.p_nutrition_grade_fr == "e" %}
+        <img src="/static/assets/img/nutriscore-e.svg" height="100">
+        {% endif %}
+      </div>
+
+      <div class="col-lg-6 col-md-6">
+
+        <h4>Repères nutritionnels pour 100 g:</h4>
+        <h5>-Matières grasses / Lipides: {{ detail.p_fat }}</h5>
+        <h5>-Acides gras saturés: {{ detail.p_saturated_fat }}</h5>
+        <h5>-Sucres: {{ detail.p_sugars }}</h5>
+        <h5>-Sel: {{ detail.p_salt }}</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="container text-center">
+    <div class="row text-center text-center">
+      <div class="col-lg-6 col-md-6 text-center">
+        <p><a href="{{ detail.p_url }}" class="btn btn-info btn-xs text-center" role="button">Consulter la fiche OpenFoodFacts sur cet aliment</a></p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+<!-- About-->
+
+<section class="page-section bg-primary" id="about">
+  <br>
+  <br>
+  <br>
+  <style>
+
+ .numberCircle {
+   width: 120px;
+   line-height: 120px;
+   border-radius: 50%;
+   text-align: center;
+   font-size: 32px;
+   border: 2px solid #666;
+ }
+
+</style>
+    <div class="container">
+        <div class="row">
+
+                  {% for food in foods %}
+                    <div class="col-12 col-lg-4 border-primary shadow">
+                      <div class="card mb-4 mb-lg-0">
+                  <div align="right">
+                        <div class="numberCircle"><h2>{{ food.p_nutrition_grade_fr }}</h2></div>
+                      </div>
+                      <img src="{{ food.p_image_url }}" height="200" class="img-fluid" alt="Responsive image">
+                      <div class="card-body">
+                      <h5 class="card-title">{{ food.p_name }}</h5>
+                      <p><a href="{% url 'food_page' food.id%}" class="btn btn-info btn-xs" role="button">Détails</a></p>
+                      {% if user.is_authenticated %}
+                      <p><a href="{% url 'save_page' food.id %}" class="btn btn-info btn-xs" role="button">sauvegarder</a></p>
+                      {% endif %}
+                     </div>
+                     </div>
+                </div>
+                  {% endfor %}
+        </div>
+    </div>
+</section>
