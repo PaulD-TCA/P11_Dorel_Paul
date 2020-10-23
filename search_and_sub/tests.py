@@ -1,6 +1,6 @@
 from django.urls import reverse, resolve
 from django.test import TestCase, Client
-from .models import Product, Backup
+from search_and_sub.models import Product, Backup
 from django.contrib.auth.models import User
 from search_and_sub.views import my_favourites, results, home
 

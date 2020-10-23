@@ -1,2 +1,4 @@
 env/
-.env
+purbeurre_plateforme/production.py
+__pycache__
+purbeurre_plateforme/staticfiles/
