@@ -2,17 +2,17 @@ language: python
 python:
   - '3.6'
 
+branches:
+  only:
+    - master
+
 before_script:
   - pip3 install -r requirements.txt
 
-env: DJANGO_SETTINGS_MODULE="purbeurre_plateforme.settings"
+env: DJANGO_SETTINGS_MODULE="purbeurre_plateforme.settings.travis"
 
 services:
   - postgresql
 
 script:
   - python3 manage.py test
-
-branches:
-  only:
-    - master
