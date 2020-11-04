@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 # Create your views here.
 def home(request):
     """Display the main web page."""
-    #template = loader.get_template('search_and_sub/home.html')
+    template = loader.get_template('search_and_sub/home.html')
     context = {}
     # if os.environ.get('ENV') == 'PRODUCTION':
     #     print("production")
