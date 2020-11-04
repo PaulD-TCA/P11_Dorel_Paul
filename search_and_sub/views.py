@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
@@ -7,11 +9,12 @@ from django.contrib.auth.models import User
 from .forms import NameForm
 # import os
 
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def home(request):
     """Display the main web page."""
-    template = loader.get_template('search_and_sub/home.html')
+    #template = loader.get_template('search_and_sub/home.html')
     context = {}
     # if os.environ.get('ENV') == 'PRODUCTION':
     #     print("production")
@@ -52,6 +55,9 @@ def results(request):
             return HttpResponse(template.render(context, request))
     template = loader.get_template('search_and_sub/results_page.html')
     context = {}
+    logger.info('New search', exc_info=True, extra={
+    'request': request,
+    })
     return HttpResponse(template.render(context, request))
 
 def my_favourites(request):
