@@ -19,7 +19,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
         cls.pathtofolder = os.path.abspath("")
         # cls.PATH = os.chmod(os.path.join(cls.pathtofolder, "functional_tests/chromedriver"), 0o755)
         # print(cls.PATH)
-        cls.selenium = webdriver.Chrome(os.chmod("functional_tests/chromedriver", 0o755))
+        cls.selenium = webdriver.Chrome(os.chmod("functional_tests/chromedriver", 755))
         cls.selenium.implicitly_wait(10)
 
     def test_search(self):
