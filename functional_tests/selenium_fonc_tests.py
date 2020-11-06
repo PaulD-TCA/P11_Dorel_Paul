@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
 from search_and_sub.models import Product
+from webdriver_manager.chrome import ChromeDriverManager
 import os
 
 
@@ -18,7 +19,10 @@ class MySeleniumTests(StaticLiveServerTestCase):
         super().setUpClass()
         cls.pathtofolder = os.path.abspath("")
         # cls.link = "functional_tests/chromedriver"
-        cls.selenium = webdriver.Chrome(executable_path="/functional_tests/chromedriver")
+        # cls.selenium = webdriver.Chrome(executable_path="functional_tests/chromedriver")
+
+        cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager().install())
+
         # cls.PATH_AND_AUTH = os.chmod(cls.PATH, 755)
         # print(type(cls.PATH_AND_AUTH))
         # cls.PATH = os.chmod(os.path.join(cls.pathtofolder, "functional_tests/chromedriver"), 0o755)
