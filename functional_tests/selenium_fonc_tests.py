@@ -1,4 +1,7 @@
 from selenium import webdriver
+
+from selenium.webdriver import Firefox
+
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -19,6 +22,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.pathtofolder = os.path.abspath("")
+        # print(cls.pathtofolder)
         # cls.link = "functional_tests/chromedriver"
         # cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver")
         # os.environ["webdriver.chrome.driver"] = cls.link
@@ -28,13 +32,18 @@ class MySeleniumTests(StaticLiveServerTestCase):
         # chrome_options.add_argument("--headless")
         # chrome_options.add_argument("--disable-gpu")
 
-        chromeOptions = webdriver.ChromeOptions()
-        chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-        chromeOptions.add_argument("--no-sandbox")
-        chromeOptions.add_argument("--disable-setuid-sandbox")
+        # chromeOptions = webdriver.ChromeOptions()
+        # chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+        # chromeOptions.add_argument("--no-sandbox")
+        # chromeOptions.add_argument("--disable-setuid-sandbox")
+        # pathtofolder = os.path.abspath("")
+        cls.PATH = cls.pathtofolder+"/functional_tests/geckodriver"
+        print("toto")
+        print(cls.PATH)
+        cls.selenium = Firefox(executable_path=cls.PATH)
 
 
-        cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver", options=chromeOptions)
+        # cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver", options=chromeOptions)
 
         # cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager().install())
         # cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager().get_download_path(version="86.0.4240.22"))
@@ -46,7 +55,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
         # cls.PATH = os.chmod(os.path.join(cls.pathtofolder, "functional_tests/chromedriver"), 0o755)
         # print(cls.PATH)
         # cls.selenium = webdriver.Chrome(os.chmod("functional_tests/chromedriver", int("0755")))
-        cls.selenium.implicitly_wait(10)
+        # cls.selenium.implicitly_wait(10)
 
     def test_search(self):
         """
@@ -87,36 +96,39 @@ class MySeleniumTests(StaticLiveServerTestCase):
         self.password1.send_keys("wxcvbn1234")
         self.password2.send_keys("wxcvbn1234")
         self.creation_button.submit()
-        self.confirmation = self.selenium.find_element_by_id("messages")
+        # self.confirmation = self.selenium.find_element_by_id("messages")
+        self.confirmation = WebDriverWait(self.selenium, 10).until(
+            expected_conditions.presence_of_element_located((By.ID, "messages")))
+
         self.assertEqual(self.confirmation.text, "Le compte à été créé pourMarcel")
 
-    # def test_login(self):
-    #     """
-    #     This test will check if a user can login after an account creation.
-    #     """
-    #     # User creation with Selenium
-    #     self.server = self.live_server_url+"/user/register/"
-    #     self.selenium.get(self.server)
-    #     self.username = self.selenium.find_element_by_name("username")
-    #     self.password1 = self.selenium.find_element_by_name("password1")
-    #     self.password2 = self.selenium.find_element_by_name("password2")
-    #     self.creation_button = self.selenium.find_element_by_id("creation_btn")
-    #     self.username.send_keys("Marcel")
-    #     self.password1.send_keys("wxcvbn1234")
-    #     self.password2.send_keys("wxcvbn1234")
-    #     self.creation_button.submit()
-    #     #login with the user name and password created above
-    #     self.server = self.live_server_url+"/user/login/"
-    #     self.selenium.get(self.server)
-    #     self.username = self.selenium.find_element_by_name("username")
-    #     self.password1 = self.selenium.find_element_by_name("password")
-    #     self.login_button = self.selenium.find_element_by_id("login_btn")
-    #     self.username.send_keys("Marcel")
-    #     self.password1.send_keys("wxcvbn1234")
-    #     self.login_button.click()
-    #     self.conf_connex = WebDriverWait(self.selenium, 10).until(
-    #         expected_conditions.presence_of_element_located((By.ID, "welcome_msg")))
-    #     self.assertEqual(self.conf_connex.text, "Bonjour Marcel")
+    def test_login(self):
+        """
+        This test will check if a user can login after an account creation.
+        """
+        # User creation with Selenium
+        self.server = self.live_server_url+"/user/register/"
+        self.selenium.get(self.server)
+        self.username = self.selenium.find_element_by_name("username")
+        self.password1 = self.selenium.find_element_by_name("password1")
+        self.password2 = self.selenium.find_element_by_name("password2")
+        self.creation_button = self.selenium.find_element_by_id("creation_btn")
+        self.username.send_keys("Marcel")
+        self.password1.send_keys("wxcvbn1234")
+        self.password2.send_keys("wxcvbn1234")
+        self.creation_button.submit()
+        #login with the user name and password created above
+        self.server = self.live_server_url+"/user/login/"
+        self.selenium.get(self.server)
+        self.username = self.selenium.find_element_by_name("username")
+        self.password1 = self.selenium.find_element_by_name("password")
+        self.login_button = self.selenium.find_element_by_id("login_btn")
+        self.username.send_keys("Marcel")
+        self.password1.send_keys("wxcvbn1234")
+        self.login_button.click()
+        self.conf_connex = WebDriverWait(self.selenium, 10).until(
+            expected_conditions.presence_of_element_located((By.ID, "welcome_msg")))
+        self.assertEqual(self.conf_connex.text, "Bonjour Marcel")
 
     @classmethod
     def tearDownClass(cls):
