@@ -1,7 +1,7 @@
 from selenium import webdriver
 
 from selenium.webdriver import Firefox
-
+from selenium.webdriver.firefox.options import Options
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -38,9 +38,13 @@ class MySeleniumTests(StaticLiveServerTestCase):
         # chromeOptions.add_argument("--disable-setuid-sandbox")
         # pathtofolder = os.path.abspath("")
         cls.PATH = cls.pathtofolder+"/functional_tests/geckodriver"
+        options = Options()
+        options.set_headless(headless=True)
+        # options.binary = cls.PATH
+
         print("toto")
         print(cls.PATH)
-        cls.selenium = Firefox(executable_path=cls.PATH)
+        cls.selenium = Firefox(executable_path=cls.PATH, options=options)
 
 
         # cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver", options=chromeOptions)
