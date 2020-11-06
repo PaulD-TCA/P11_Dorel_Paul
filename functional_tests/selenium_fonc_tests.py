@@ -20,7 +20,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
         super().setUpClass()
         cls.pathtofolder = os.path.abspath("")
         # cls.link = "functional_tests/chromedriver"
-        cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver")
+        # cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver")
         # os.environ["webdriver.chrome.driver"] = cls.link
         # cls.selenium = webdriver.Chrome(cls.link)
 
