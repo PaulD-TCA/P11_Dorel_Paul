@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
 from search_and_sub.models import Product
+import os
 
 
 class MySeleniumTests(StaticLiveServerTestCase):
@@ -15,7 +16,9 @@ class MySeleniumTests(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.PATH = "chromedriver"
+        cls.pathtofolder = os.path.abspath("")
+        cls.PATH = os.path.join(cls.pathtofolder, "functional_tests/chromedriver")
+        print(cls.PATH)
         cls.selenium = webdriver.Chrome(cls.PATH)
         cls.selenium.implicitly_wait(10)
 
