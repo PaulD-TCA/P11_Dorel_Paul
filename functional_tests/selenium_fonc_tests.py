@@ -21,7 +21,7 @@ class MySeleniumTests(StaticLiveServerTestCase):
         # cls.link = "functional_tests/chromedriver"
         # cls.selenium = webdriver.Chrome(executable_path="functional_tests/chromedriver")
 
-        cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager().install())
+        cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager())#.install())
 
         # cls.PATH_AND_AUTH = os.chmod(cls.PATH, 755)
         # print(type(cls.PATH_AND_AUTH))
