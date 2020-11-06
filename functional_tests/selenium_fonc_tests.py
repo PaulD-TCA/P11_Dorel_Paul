@@ -9,6 +9,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
 from search_and_sub.models import Product
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 # from selenium.webdriver.chrome.options import Options
 import os
 
@@ -37,14 +38,16 @@ class MySeleniumTests(StaticLiveServerTestCase):
         # chromeOptions.add_argument("--no-sandbox")
         # chromeOptions.add_argument("--disable-setuid-sandbox")
         # pathtofolder = os.path.abspath("")
-        cls.PATH = cls.pathtofolder+"/functional_tests/geckodriver"
+        PATH = cls.pathtofolder+"/functional_tests/geckodriver"
         options = Options()
         options.set_headless(headless=True)
-        # options.binary = cls.PATH
+        options.PATH = PATH
+        cap = DesiredCapabilities().FIREFOX
+        cap["marionette"] = True
 
         print("toto")
-        print(cls.PATH)
-        cls.selenium = Firefox(executable_path=cls.PATH, options=options)
+        print(PATH)
+        cls.selenium = Firefox(executable_path=PATH, options=options, capabilities=cap)
 
 
         # cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver", options=chromeOptions)
