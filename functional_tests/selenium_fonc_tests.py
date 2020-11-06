@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
 from search_and_sub.models import Product
 from webdriver_manager.chrome import ChromeDriverManager
+# from selenium.webdriver.chrome.options import Options
 import os
 
 
@@ -18,13 +19,20 @@ class MySeleniumTests(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.pathtofolder = os.path.abspath("")
-        cls.link = "functional_tests/chromedriver"
-        # cls.selenium = webdriver.Chrome(executable_path="functional_tests/chromedriver")
-        os.environ["webdriver.chrome.driver"] = cls.link
-        cls.selenium = webdriver.Chrome(cls.link)
+        # cls.link = "functional_tests/chromedriver"
+        cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver")
+        # os.environ["webdriver.chrome.driver"] = cls.link
+        # cls.selenium = webdriver.Chrome(cls.link)
+
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--disable-gpu")
+        cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver", options=chrome_options)
 
         # cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager().install())
-        # cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager().get_download_path(version="79.0.3945.36")
+        # cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager().get_download_path(version="86.0.4240.22"))
+        # cls.st = os.stat(cls.chrome_driver_path)
+        # os.chmod(self.chrome_driver_path, cls.st.st_mode | stat.S_IEXEC)
 
         # cls.PATH_AND_AUTH = os.chmod(cls.PATH, 755)
         # print(type(cls.PATH_AND_AUTH))
@@ -75,33 +83,33 @@ class MySeleniumTests(StaticLiveServerTestCase):
         self.confirmation = self.selenium.find_element_by_id("messages")
         self.assertEqual(self.confirmation.text, "Le compte à été créé pourMarcel")
 
-    def test_login(self):
-        """
-        This test will check if a user can login after an account creation.
-        """
-        # User creation with Selenium
-        self.server = self.live_server_url+"/user/register/"
-        self.selenium.get(self.server)
-        self.username = self.selenium.find_element_by_name("username")
-        self.password1 = self.selenium.find_element_by_name("password1")
-        self.password2 = self.selenium.find_element_by_name("password2")
-        self.creation_button = self.selenium.find_element_by_id("creation_btn")
-        self.username.send_keys("Marcel")
-        self.password1.send_keys("wxcvbn1234")
-        self.password2.send_keys("wxcvbn1234")
-        self.creation_button.submit()
-        #login with the user name and password created above
-        self.server = self.live_server_url+"/user/login/"
-        self.selenium.get(self.server)
-        self.username = self.selenium.find_element_by_name("username")
-        self.password1 = self.selenium.find_element_by_name("password")
-        self.login_button = self.selenium.find_element_by_id("login_btn")
-        self.username.send_keys("Marcel")
-        self.password1.send_keys("wxcvbn1234")
-        self.login_button.click()
-        self.conf_connex = WebDriverWait(self.selenium, 10).until(
-            expected_conditions.presence_of_element_located((By.ID, "welcome_msg")))
-        self.assertEqual(self.conf_connex.text, "Bonjour Marcel")
+    # def test_login(self):
+    #     """
+    #     This test will check if a user can login after an account creation.
+    #     """
+    #     # User creation with Selenium
+    #     self.server = self.live_server_url+"/user/register/"
+    #     self.selenium.get(self.server)
+    #     self.username = self.selenium.find_element_by_name("username")
+    #     self.password1 = self.selenium.find_element_by_name("password1")
+    #     self.password2 = self.selenium.find_element_by_name("password2")
+    #     self.creation_button = self.selenium.find_element_by_id("creation_btn")
+    #     self.username.send_keys("Marcel")
+    #     self.password1.send_keys("wxcvbn1234")
+    #     self.password2.send_keys("wxcvbn1234")
+    #     self.creation_button.submit()
+    #     #login with the user name and password created above
+    #     self.server = self.live_server_url+"/user/login/"
+    #     self.selenium.get(self.server)
+    #     self.username = self.selenium.find_element_by_name("username")
+    #     self.password1 = self.selenium.find_element_by_name("password")
+    #     self.login_button = self.selenium.find_element_by_id("login_btn")
+    #     self.username.send_keys("Marcel")
+    #     self.password1.send_keys("wxcvbn1234")
+    #     self.login_button.click()
+    #     self.conf_connex = WebDriverWait(self.selenium, 10).until(
+    #         expected_conditions.presence_of_element_located((By.ID, "welcome_msg")))
+    #     self.assertEqual(self.conf_connex.text, "Bonjour Marcel")
 
     @classmethod
     def tearDownClass(cls):
