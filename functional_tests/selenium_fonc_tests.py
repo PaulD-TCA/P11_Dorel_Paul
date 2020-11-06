@@ -15,7 +15,9 @@ class MySeleniumTests(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.PATH = "/media/pauldorel/Mes_docs/Documents_Ordi_PaulD/Dossiers_PaulD/12_Développeur_Python/Projet_11_Amélio_projet_existant_Python/P11_Dorel_Paul/functional_tests/chromedriver"
+        # cls.PATH = "/media/pauldorel/Mes_docs/Documents_Ordi_PaulD/Dossiers_PaulD/12_Développeur_Python/Projet_11_Amélio_projet_existant_Python/P11_Dorel_Paul/functional_tests/chromedriver"
+        cls.PATH = "/functional_tests/chromedriver"
+
         cls.selenium = webdriver.Chrome(cls.PATH)
         cls.selenium.implicitly_wait(10)
 
