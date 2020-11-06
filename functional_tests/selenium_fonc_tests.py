@@ -1,16 +1,11 @@
 from selenium import webdriver
-
 from selenium.webdriver import Firefox
-from selenium.webdriver.firefox.options import Options
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.by import By
 from search_and_sub.models import Product
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-# from selenium.webdriver.chrome.options import Options
 import os
 
 
@@ -18,51 +13,12 @@ class MySeleniumTests(StaticLiveServerTestCase):
     """
     3 functionals tests are done in this class.
     """
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.pathtofolder = os.path.abspath("")
-        # print(cls.pathtofolder)
-        # cls.link = "functional_tests/chromedriver"
-        # cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver")
-        # os.environ["webdriver.chrome.driver"] = cls.link
-        # cls.selenium = webdriver.Chrome(cls.link)
-
-        # chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument("--headless")
-        # chrome_options.add_argument("--disable-gpu")
-
-        # chromeOptions = webdriver.ChromeOptions()
-        # chromeOptions.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-        # chromeOptions.add_argument("--no-sandbox")
-        # chromeOptions.add_argument("--disable-setuid-sandbox")
-        # pathtofolder = os.path.abspath("")
-        PATH = cls.pathtofolder+"/functional_tests/geckodriver"
-        options = Options()
-        options.set_headless(headless=True)
-        options.PATH = PATH
-        cap = DesiredCapabilities().FIREFOX
-        cap["marionette"] = True
-
-        print("toto")
-        print(PATH)
-        cls.selenium = Firefox(executable_path=PATH, options=options, capabilities=cap)
-
-
-        # cls.selenium = webdriver.Chrome(executable_path=r"functional_tests/chromedriver", options=chromeOptions)
-
-        # cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager().install())
-        # cls.selenium = webdriver.Chrome(executable_path=ChromeDriverManager().get_download_path(version="86.0.4240.22"))
-        # cls.st = os.stat(cls.chrome_driver_path)
-        # os.chmod(self.chrome_driver_path, cls.st.st_mode | stat.S_IEXEC)
-
-        # cls.PATH_AND_AUTH = os.chmod(cls.PATH, 755)
-        # print(type(cls.PATH_AND_AUTH))
-        # cls.PATH = os.chmod(os.path.join(cls.pathtofolder, "functional_tests/chromedriver"), 0o755)
-        # print(cls.PATH)
-        # cls.selenium = webdriver.Chrome(os.chmod("functional_tests/chromedriver", int("0755")))
-        # cls.selenium.implicitly_wait(10)
+        path_to_folder = os.path.abspath("")
+        PATH = path_to_folder+"/functional_tests/geckodriver"
+        cls.selenium = Firefox(executable_path=PATH)
 
     def test_search(self):
         """
@@ -103,10 +59,8 @@ class MySeleniumTests(StaticLiveServerTestCase):
         self.password1.send_keys("wxcvbn1234")
         self.password2.send_keys("wxcvbn1234")
         self.creation_button.submit()
-        # self.confirmation = self.selenium.find_element_by_id("messages")
         self.confirmation = WebDriverWait(self.selenium, 10).until(
             expected_conditions.presence_of_element_located((By.ID, "messages")))
-
         self.assertEqual(self.confirmation.text, "Le compte à été créé pourMarcel")
 
     def test_login(self):
