@@ -18,7 +18,10 @@ class MySeleniumTests(StaticLiveServerTestCase):
         super().setUpClass()
         path_to_folder = os.path.abspath("")
         PATH = path_to_folder+"/functional_tests/geckodriver"
-        cls.selenium = Firefox(executable_path=PATH)
+        firefox_options = webdriver.FirefoxOptions()
+        firefox_options.headless = True
+        firefox_options.add_argument('--window-size=1920x1080')
+        cls.selenium = Firefox(executable_path=PATH, options=firefox_options)
 
     def test_search(self):
         """
