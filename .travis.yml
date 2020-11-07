@@ -5,7 +5,8 @@ python:
   - '3.8'
 
 addons:
-  firefox: latest
+  # firefox: latest
+  chrome: stable
 
 branches:
   only:
