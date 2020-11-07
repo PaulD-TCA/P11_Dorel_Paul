@@ -16,28 +16,28 @@ class MySeleniumTests(StaticLiveServerTestCase):
     3 functionals tests are done in this class.
     """
     #chrome driver
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        path_to_folder = os.path.abspath("")
-        PATH = path_to_folder+"/functional_tests/chromedriver"
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--remote-debugging-port=9222')
-        chrome_options.add_argument('--window-size=1920x1080')
-        cls.selenium = webdriver.Chrome(PATH, options=chrome_options)
-
-    #firefox
     # @classmethod
     # def setUpClass(cls):
     #     super().setUpClass()
     #     path_to_folder = os.path.abspath("")
-    #     PATH = path_to_folder+"/functional_tests/geckodriver"
-    #     firefox_options = webdriver.FirefoxOptions()
-    #     firefox_options.headless = True
-    #     firefox_options.add_argument('--window-size=1920x1080')
-    #     cls.selenium = Firefox(executable_path=PATH, options=firefox_options)
+    #     PATH = path_to_folder+"/functional_tests/chromedriver"
+    #     chrome_options = webdriver.ChromeOptions()
+    #     chrome_options.add_argument('--headless')
+    #     chrome_options.add_argument('--disable-gpu')
+    #     chrome_options.add_argument('--remote-debugging-port=9222')
+    #     chrome_options.add_argument('--window-size=1920x1080')
+    #     cls.selenium = webdriver.Chrome(PATH, options=chrome_options)
+
+    #firefox
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        path_to_folder = os.path.abspath("")
+        PATH = path_to_folder+"/functional_tests/geckodriver"
+        firefox_options = webdriver.FirefoxOptions()
+        firefox_options.headless = True
+        firefox_options.add_argument('--window-size=1920x1080')
+        cls.selenium = Firefox(executable_path=PATH, options=firefox_options)
 
     def test_search(self):
         """

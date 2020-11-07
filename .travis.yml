@@ -5,8 +5,11 @@ python:
   - '3.8'
 
 addons:
-  # firefox: latest
-  chrome: stable
+  firefox: latest
+  apt:
+  packages:
+    firefox-geckodriver
+  # chrome: stable
 
 branches:
   only:
