@@ -11,6 +11,9 @@ before_script:
 
 env: DJANGO_SETTINGS_MODULE="purbeurre_plateforme.settings.travis"
 
+addons:
+  firefox: latest
+
 services:
   - postgresql
 
