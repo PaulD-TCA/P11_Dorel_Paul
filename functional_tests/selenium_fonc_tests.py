@@ -32,8 +32,9 @@ class MySeleniumTests(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        path_to_folder = os.path.abspath("")
-        PATH = path_to_folder+"/functional_tests/geckodriver"
+        # path_to_folder = os.path.abspath("")
+        # PATH = path_to_folder+"/functional_tests/geckodriver"
+        PATH = "/usr/local/bin/geckodriver"
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.headless = True
         firefox_options.add_argument('--window-size=1920x1080')
