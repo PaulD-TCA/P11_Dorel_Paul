@@ -16,10 +16,6 @@ def home(request):
     """Display the main web page."""
     template = loader.get_template('search_and_sub/home.html')
     context = {}
-    # if os.environ.get('ENV') == 'PRODUCTION':
-    #     print("production")
-    # else:
-    #     print(" pas production")
     return HttpResponse(template.render(context, request))
 
 def food_page(request, id):
@@ -30,14 +26,22 @@ def food_page(request, id):
     return HttpResponse(template.render(context, request))
 
 def save_page(request, id):
-    """Allow the user to save a ssearched food."""
+    """Allow the user to save a searched food."""
     template = loader.get_template('search_and_sub/save_page.html')
     food_details = Product.objects.filter(id=id)
     current_user = request.user.id
-    food_to_save = Backup(p_id_id=id, u_id_id=current_user)
-    food_to_save.save()
-    context = {'food_details':food_details,}
-    return HttpResponse(template.render(context, request))
+    backup_in_db = Backup.objects.filter(p_id_id=id, u_id_id=current_user)
+    if backup_in_db.exists():
+        print("déja présent")
+        template = loader.get_template('search_and_sub/save_exist.html')
+        context = {'food_details':food_details,}
+        return HttpResponse(template.render(context, request))
+    else:
+        print("à sauvegarder")
+        food_to_save = Backup(p_id_id=id, u_id_id=current_user)
+        food_to_save.save()
+        context = {'food_details':food_details,}
+        return HttpResponse(template.render(context, request))
 
 def results(request):
     """Display the results of a query."""
@@ -66,4 +70,13 @@ def my_favourites(request):
     favourites_list = Product.objects.filter(backup__u_id_id=current_user)
     template = loader.get_template('search_and_sub/my_favourites_page.html')
     context = {'favourites_list':favourites_list}
+    return HttpResponse(template.render(context, request))
+
+def delete_backup(request, id):
+    """Delete a backup."""
+    template = loader.get_template('search_and_sub/save_deleted.html')
+    current_user = request.user.id
+    print(id)
+    Backup.objects.filter(p_id_id=id, u_id_id=current_user).delete()
+    context = {}
     return HttpResponse(template.render(context, request))

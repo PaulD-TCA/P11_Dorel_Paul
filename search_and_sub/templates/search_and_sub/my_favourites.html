@@ -1,14 +1,37 @@
 <section class="page-section bg-primary" id="about">
   <br><br><br>
+  <style>
+
+ .numberCircle {
+   width: 120px;
+   line-height: 120px;
+   border-radius: 50%;
+   text-align: center;
+   font-size: 32px;
+   border: 2px solid #666;
+ }
+
+</style>
     <div class="container">
         <div class="row">
             {% for favorite in favourites_list %}
-            <div class="col-xs-18 col-sm-6 col-md-4">
+
+            <div class="col-12 col-lg-4 border-primary shadow">
+              <div class="card mb-4 mb-lg-0">
+              <div align="right">
+              <div class="numberCircle"><h2>{{ favorite.p_nutrition_grade_fr }}</h2></div>
+              </div>
               <img src="{{ favorite.p_image_url }}" height="200" class="img-fluid" alt="Responsive image">
-              <h4>{{ favorite.p_name }}</h4>
-              <h5>Nutriscore: {{ favorite.p_nutrition_grade_fr }}</h5>
-            </div>
+              <div class="card-body">
+              <h5 class="card-title">{{ favorite.p_name }}</h5>
+              <p><a href="{% url 'delete_backup' favorite.id %}" class="btn btn-info btn-xs" role="button">Supprimer</a></p>
+             </div>
+             </div>
+           </div>
+
             {% endfor %}
+
+
         </div>
     </div>
 </section>

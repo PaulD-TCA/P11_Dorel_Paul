@@ -15,6 +15,7 @@
             </form>
             {% if user.is_authenticated %}
             <a href="{% url 'my_favourites_page' %}"><img src="/static/assets/img/Carrot.png" height="100"></a>
+            <a id="icon_menu" href="{% url 'menu_generation' %}"><img src="/static/assets/img/menu_icon.png" height="100"></a>
             <h3 id="welcome_msg">Bonjour {{ request.user}}</h3>
             <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt fa-3x"></i></a>
             {% else %}
